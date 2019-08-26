@@ -121,21 +121,21 @@ def dist_conn_perc(src, trg, prob=0.1, min_dist=0.0, max_dist=300.0, min_syns=1,
     else:
         src_pos = src['positions']
         trg_pos = trg['positions']
-	dist =np.sqrt((src_pos[0]-trg_pos[0])**2+(src_pos[1]-trg_pos[1])**2+(src_pos[2]-trg_pos[2])**2)
+    dist =np.sqrt((src_pos[0]-trg_pos[0])**2+(src_pos[1]-trg_pos[1])**2+(src_pos[2]-trg_pos[2])**2)
         #print("src_pos: {} trg_pos: {} dist: {}".format(src_pos,trg_pos,dist))        
 
-	if dist <= max_dist and np.random.uniform() < prob:
-	    tmp_nsyn = np.random.randint(min_syns, max_syns)
-	    #print("creating {} synapse(s) between cell {} and {}".format(tmp_nsyn,sid,tid))
-	else:
-	    tmp_nsyn = 0
+    if dist <= max_dist and np.random.uniform() < prob:
+        tmp_nsyn = np.random.randint(min_syns, max_syns)
+        #print("creating {} synapse(s) between cell {} and {}".format(tmp_nsyn,sid,tid))
+    else:
+        tmp_nsyn = 0
 
         return tmp_nsyn
 
 # Create connections between Pyr --> PV cells
 net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'PV'},
               connection_rule=dist_conn_perc,
-	      connection_params={'prob':0.12,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
+          connection_params={'prob':0.12,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
               syn_weight=5.0e-03,
               dynamics_params='AMPA_ExcToExc.json',
               model_template='Exp2Syn',
@@ -146,7 +146,7 @@ net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'PV'},
 # Create connections between PV --> Pyr cells
 net.add_edges(source={'pop_name': 'PV'}, target={'pop_name': ['PyrA','PyrC']},
               connection_rule=dist_conn_perc,
-	      connection_params={'prob':0.34,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
+          connection_params={'prob':0.34,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
               syn_weight=5.0e-03,
               dynamics_params='GABA_InhToExc.json',
               model_template='Exp2Syn',
@@ -167,7 +167,7 @@ def one_to_one(source, target):
     sid = source.node_id
     tid = target.node_id
     if sid == tid:
-	#print("connecting cell {} to {}".format(sid,tid))
+    #print("connecting cell {} to {}".format(sid,tid))
         tmp_nsyn = 1
     else:
         return None
