@@ -1,6 +1,6 @@
 {
   "manifest": {
-    "$BASE_DIR": ".", 
+    "$BASE_DIR": "/home/latimerb/SPWR_BMTK", 
     "$COMPONENTS_DIR": "$BASE_DIR/biophys_components", 
     "$NETWORK_DIR": "$BASE_DIR/network"
   }, 
@@ -26,10 +26,6 @@
       {
         "edges_file": "$NETWORK_DIR/SPWR_biophysical_SPWR_biophysical_edges.h5", 
         "edge_types_file": "$NETWORK_DIR/SPWR_biophysical_SPWR_biophysical_edge_types.csv"
-      }, 
-      {
-        "edges_file": "$NETWORK_DIR/mthalamus_SPWR_biophysical_edges.h5", 
-        "edge_types_file": "$NETWORK_DIR/mthalamus_SPWR_biophysical_edge_types.csv"
       }
     ]
   }

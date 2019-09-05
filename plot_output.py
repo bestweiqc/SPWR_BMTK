@@ -30,19 +30,19 @@ lfp_arr = np.asarray(lfp)
 plt.figure()
 plt.plot(time_steps, var_report.data(gid=10,var_name='v'))
 plt.plot(time_steps, var_report.data(gid=11,var_name='v'))
-#plt.savefig('mem_vol.png')
+plt.savefig('mem_vol.png')
 
 
 plt.figure()
 plt.plot(lfp_arr[:,0])
 plt.plot(lfp_arr[:,1])
 plt.plot(lfp_arr[:,2])
-#plt.savefig('lfp.png')
+plt.savefig('lfp.png')
 
-plt.figure()
-from bmtk.analyzer.spike_trains import raster_plot, rates_plot
+#plt.figure()
+#from bmtk.analyzer.spike_trains import raster_plot, rates_plot
 
-raster_plot('network/SPWR_biophysical_nodes.h5','network/SPWR_biophysical_node_types.csv','output/spikes.h5')
+#raster_plot('network/SPWR_biophysical_nodes.h5','network/SPWR_biophysical_node_types.csv','output/spikes.h5')
 
-plt.show()
+#plt.show()
 

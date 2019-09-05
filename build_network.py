@@ -200,6 +200,14 @@ thalamus.save_edges(output_dir='network')
 
 print("External nodes and edges built")
 
+from bmtk.utils.sim_setup import build_env_bionet
+
+build_env_bionet(base_dir='./',
+		network_dir='./network',
+		tstop=1000.0, dt = 0.1,
+		compile_mechanisms=True)
+
+
 #from bmtk.utils.spike_trains import SpikesGenerator
 
 #sg = SpikesGenerator(nodes='network/mthalamus_nodes.h5', t_max=60.0)
