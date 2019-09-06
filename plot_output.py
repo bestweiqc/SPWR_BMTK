@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 config_file = "simulation_config.json"
 lfp_file = "./output/ecp.h5"
 mem_pot_file = './output/membrane_report.h5'
-
+raster_file = './output/spikes.h5'
 
 # load 
 f = h5py.File(mem_pot_file,'r')
@@ -21,10 +21,12 @@ mem_potential = f['v']['data']
 
 
 f = h5py.File(lfp_file,'r')
-
-
 lfp = list(f['data'])
 lfp_arr = np.asarray(lfp)
+
+f = h5py.File(raster_file,'r')
+gids = f['spikes']['gids']
+timestamps = f['spikes']['timestamps']
 
 # Plot data
 
@@ -36,10 +38,8 @@ plt.plot(lfp_arr[:,0])
 plt.plot(lfp_arr[:,1])
 plt.plot(lfp_arr[:,2])
 
-#plt.figure()
-#from bmtk.analyzer.spike_trains import raster_plot, rates_plot
-
-#raster_plot('network/SPWR_biophysical_nodes.h5','network/SPWR_biophysical_node_types.csv','output/spikes.h5')
+plt.figure()
+plt.plot(timestamps,gids,'.')
 
 plt.show()
 
