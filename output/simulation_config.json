@@ -47,11 +47,11 @@
     }
   }, 
   "components": {
-    "point_neuron_models_dir": "./biophys_components/point_neuron_templates", 
-    "biophysical_neuron_models_dir": "./biophys_components/biophysical_neuron_templates", 
-    "mechanisms_dir": "./biophys_components/mechanisms", 
-    "morphologies_dir": "./biophys_components/morphologies", 
-    "synaptic_models_dir": "./biophys_components/synaptic_models"
+    "point_neuron_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/point_neuron_templates", 
+    "biophysical_neuron_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/biophysical_neuron_templates", 
+    "mechanisms_dir": "/home/latimerb/SPWR_BMTK/biophys_components/mechanisms", 
+    "morphologies_dir": "/home/latimerb/SPWR_BMTK/biophys_components/morphologies", 
+    "synaptic_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/synaptic_models"
   }, 
   "output": {
     "spikes_file": "spikes.h5", 
@@ -64,22 +64,22 @@
   "networks": {
     "nodes": [
       {
-        "node_types_file": "./network/mthalamus_node_types.csv", 
-        "nodes_file": "./network/mthalamus_nodes.h5"
+        "node_types_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_node_types.csv", 
+        "nodes_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_nodes.h5"
       }, 
       {
-        "node_types_file": "./network/SPWR_biophysical_node_types.csv", 
-        "nodes_file": "./network/SPWR_biophysical_nodes.h5"
+        "node_types_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_node_types.csv", 
+        "nodes_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_nodes.h5"
       }
     ], 
     "edges": [
       {
-        "edges_file": "./network/SPWR_biophysical_SPWR_biophysical_edges.h5", 
-        "edge_types_file": "./network/SPWR_biophysical_SPWR_biophysical_edge_types.csv"
+        "edges_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edges.h5", 
+        "edge_types_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edge_types.csv"
       }, 
       {
-        "edges_file": "./network/mthalamus_SPWR_biophysical_edges.h5", 
-        "edge_types_file": "./network/mthalamus_SPWR_biophysical_edge_types.csv"
+        "edges_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edges.h5", 
+        "edge_types_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edge_types.csv"
       }
     ]
   }

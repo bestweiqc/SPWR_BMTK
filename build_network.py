@@ -18,8 +18,8 @@ pos_list = np.vstack([xx.ravel(), yy.ravel(), zz.ravel()]).T
 # Number of cells in each population
 numPN_A = 8229
 numPN_C = 8229
-numPV = 3908
-numAAC = 206
+numBask = 3708
+numAAC = 406
 
 ###################################################################################
 ####################################Pyr Type A#####################################
@@ -65,11 +65,11 @@ net.add_nodes(N=numPN_C, pop_name='PyrC',
 pos_list = np.delete(pos_list,inds,0)
 
 # Pick new coordinates
-inds = np.random.choice(np.arange(0,np.size(pos_list,0)),numPV,replace=False)
+inds = np.random.choice(np.arange(0,np.size(pos_list,0)),numBask,replace=False)
 pos = pos_list[inds,:]
 
-# Add a population of numPV nodes
-net.add_nodes(N=numPV, pop_name='PV',
+# Add a population of numBask nodes
+net.add_nodes(N=numBask, pop_name='Bask',
               positions=positions_list(positions=pos),
               mem_potential='e',
               model_type='biophysical',
@@ -132,8 +132,8 @@ def dist_conn_perc(src, trg, prob=0.1, min_dist=0.0, max_dist=300.0, min_syns=1,
 
         return tmp_nsyn
 
-# Create connections between Pyr --> PV cells
-net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'PV'},
+# Create connections between Pyr --> Bask cells
+net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'Bask'},
               connection_rule=dist_conn_perc,
           connection_params={'prob':0.12,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
               syn_weight=5.0e-03,
@@ -143,8 +143,8 @@ net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'PV'},
               target_sections=['somatic'],
               delay=2.0)
 
-# Create connections between PV --> Pyr cells
-net.add_edges(source={'pop_name': 'PV'}, target={'pop_name': ['PyrA','PyrC']},
+# Create connections between Bask --> Pyr cells
+net.add_edges(source={'pop_name': 'Bask'}, target={'pop_name': ['PyrA','PyrC']},
               connection_rule=dist_conn_perc,
           connection_params={'prob':0.34,'min_dist':0.0,'max_dist':300.0,'min_syns':1,'max_syns':2},
               syn_weight=5.0e-03,
@@ -174,23 +174,23 @@ def one_to_one(source, target):
 
     return tmp_nsyn
 
-#thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
-#                   connection_rule=one_to_one,
-#                   syn_weight=5.0e-03,
-#                   target_sections=['somatic'],
-#                   delay=2.0,
-#                   distance_range=[0.0, 300.0],
-#                   dynamics_params='AMPA_ExcToExc.json',
-#                   model_template='Exp2Syn')
-#
-#thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrC'),
-#                   connection_rule=one_to_one,
-#                   syn_weight=5.0e-03,
-#                   target_sections=['somatic'],
-#                   delay=2.0,
-#                   distance_range=[0.0, 300.0],
-#                   dynamics_params='AMPA_ExcToExc.json',
-#                   model_template='Exp2Syn')
+thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
+                   connection_rule=one_to_one,
+                   syn_weight=5.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrC'),
+                   connection_rule=one_to_one,
+                   syn_weight=5.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
 
 # Build and save our network
 
@@ -208,8 +208,8 @@ build_env_bionet(base_dir='./',
 		compile_mechanisms=True)
 
 
-#from bmtk.utils.spike_trains import SpikesGenerator
+from bmtk.utils.spike_trains import SpikesGenerator
 
-#sg = SpikesGenerator(nodes='network/mthalamus_nodes.h5', t_max=60.0)
-#sg.set_rate(15.0)
-#sg.save_csv('thalamus_spikes.csv', in_ms=True)
+sg = SpikesGenerator(nodes='network/mthalamus_nodes.h5', t_max=60.0)
+sg.set_rate(15.0)
+sg.save_csv('thalamus_spikes.csv', in_ms=True)
