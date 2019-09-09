@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 6.2.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -152,7 +152,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "6.2.0",
 "Kv2like",
  "gbar_Kv2like",
  0,
@@ -216,7 +216,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 Kv2like /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kv2like.mod\n");
+ 	ivoc_help("help ?1 Kv2like /home/mizzou/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kv2like.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -248,7 +248,7 @@ static int _ode_spec1(_threadargsproto_);
  Dm = Dm  / (1. - dt*( ( ( ( - 1.0 ) ) ) / mTau )) ;
  Dh1 = Dh1  / (1. - dt*( ( ( ( - 1.0 ) ) ) / h1Tau )) ;
  Dh2 = Dh2  / (1. - dt*( ( ( ( - 1.0 ) ) ) / h2Tau )) ;
-  return 0;
+ return 0;
 }
  /*END CVODE*/
  static int states (double* _p, Datum* _ppvar, Datum* _thread, _NrnThread* _nt) { {

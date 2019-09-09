@@ -16,10 +16,10 @@ xx, yy, zz = np.meshgrid(x_grid, y_grid, z_grid)
 pos_list = np.vstack([xx.ravel(), yy.ravel(), zz.ravel()]).T
 
 # Number of cells in each population
-numPN_A = 8229
-numPN_C = 8229
-numBask = 3708
-numAAC = 406
+numPN_A = 82#8229
+numPN_C = 82#8229
+numBask = 37#3708
+numAAC = 4#406
 
 ###################################################################################
 ####################################Pyr Type A#####################################
@@ -176,7 +176,7 @@ def one_to_one(source, target):
 
 thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
                    connection_rule=one_to_one,
-                   syn_weight=5.0e-03,
+                   syn_weight=9.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -185,7 +185,7 @@ thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
 
 thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrC'),
                    connection_rule=one_to_one,
-                   syn_weight=5.0e-03,
+                   syn_weight=9.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -205,6 +205,7 @@ from bmtk.utils.sim_setup import build_env_bionet
 build_env_bionet(base_dir='./',
 		network_dir='./network',
 		tstop=1000.0, dt = 0.1,
+		components_dir='biophys_components',
 		compile_mechanisms=True)
 
 

@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 6.2.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -132,7 +132,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "6.2.0",
 "CaDynamics",
  "gamma_CaDynamics",
  "decay_CaDynamics",
@@ -199,7 +199,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 CaDynamics /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/CaDynamics.mod\n");
+ 	ivoc_help("help ?1 CaDynamics /home/mizzou/SPWR_BMTK/biophys_components/mechanisms/x86_64/CaDynamics.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -225,7 +225,7 @@ static int _ode_spec1(_threadargsproto_);
 }
  static int _ode_matsol1 (double* _p, Datum* _ppvar, Datum* _thread, _NrnThread* _nt) {
  Dcai = Dcai  / (1. - dt*( ( - ( ( 1.0 ) ) / decay ) )) ;
-  return 0;
+ return 0;
 }
  /*END CVODE*/
  static int states (double* _p, Datum* _ppvar, Datum* _thread, _NrnThread* _nt) { {
