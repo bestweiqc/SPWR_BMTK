@@ -1,4 +1,4 @@
-/* Created by Language version: 6.2.0 */
+/* Created by Language version: 7.5.0 */
 /* NOT VECTORIZED */
 #define NRN_VECTORIZED 0
 #include <stdio.h>
@@ -135,7 +135,7 @@ static void nrn_state(_NrnThread*, _Memb_list*, int);
 }
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "6.2.0",
+ "7.5.0",
 "VecStim",
  0,
  0,
@@ -192,7 +192,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  pnt_receive[_mechtype] = _net_receive;
  pnt_receive_size[_mechtype] = 1;
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 VecStim /home/mizzou/SPWR_BMTK/biophys_components/mechanisms/x86_64/vecevent.mod\n");
+ 	ivoc_help("help ?1 VecStim /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/vecevent.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }

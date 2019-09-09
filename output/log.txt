@@ -1,9 +1,11 @@
-2019-09-09 16:38:56,091 [INFO] Created log file
-2019-09-09 16:38:56,316 [INFO] Building cells.
-2019-09-09 16:39:40,055 [INFO] Building recurrent connections
-2019-09-09 16:39:40,086 [INFO] Running simulation for 1000.000 ms with the time step 0.100 ms
-2019-09-09 16:39:40,086 [INFO] Starting timestep: 0 at t_sim: 0.000 ms
-2019-09-09 16:39:40,086 [INFO] Block save every 5000 steps
-2019-09-09 16:39:54,728 [INFO]     step:5000 t_sim:500.00 ms
-2019-09-09 16:40:09,293 [INFO]     step:10000 t_sim:1000.00 ms
-2019-09-09 16:40:09,314 [INFO] Simulation completed in 29.23 seconds 
+2019-09-09 14:47:04,335 [INFO] Created log file
+2019-09-09 14:47:04,336 [INFO] Running NEURON with mpi (100 cores).
+2019-09-09 14:47:04,962 [INFO] Building cells.
+2019-09-09 14:47:05,260 [INFO] Building recurrent connections
+2019-09-09 14:47:05,262 [WARNING] Was unable to run h5py in parallel (mpi) mode. Saving of membrane variable(s) may slow down.
+2019-09-09 14:47:05,352 [INFO] Running simulation for 1000.000 ms with the time step 0.100 ms
+2019-09-09 14:47:05,352 [INFO] Starting timestep: 0 at t_sim: 0.000 ms
+2019-09-09 14:47:05,352 [INFO] Block save every 5000 steps
+2019-09-09 14:47:05,608 [INFO]     step:5000 t_sim:500.00 ms
+2019-09-09 14:47:05,832 [INFO]     step:10000 t_sim:1000.00 ms
+2019-09-09 14:47:06,436 [INFO] Simulation completed in 1.085 seconds 
