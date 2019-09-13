@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 7.7.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -89,6 +89,15 @@ extern void hoc_register_limits(int, HocParmLimits*);
 extern void hoc_register_units(int, HocParmUnits*);
 extern void nrn_promote(Prop*, int, int);
 extern Memb_func* memb_func;
+ 
+#define NMODL_TEXT 1
+#if NMODL_TEXT
+static const char* nmodl_file_text;
+static const char* nmodl_filename;
+extern void hoc_reg_nmodl_text(int, const char*);
+extern void hoc_reg_nmodl_filename(int, const char*);
+#endif
+
  extern void _nrn_setdata_reg(int, void(*)(Prop*));
  static void _setdata(Prop* _prop) {
  _extcall_prop = _prop;
@@ -142,7 +151,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "7.7.0",
 "Kd",
  "gbar_Kd",
  0,
@@ -197,6 +206,10 @@ extern void _cvode_abstol( Symbol**, double*, int);
  _mechtype = nrn_get_mechtype(_mechanism[1]);
      _nrn_setdata_reg(_mechtype, _setdata);
      _nrn_thread_reg(_mechtype, 2, _update_ion_pointer);
+ #if NMODL_TEXT
+  hoc_reg_nmodl_text(_mechtype, nmodl_file_text);
+  hoc_reg_nmodl_filename(_mechtype, nmodl_filename);
+#endif
   hoc_register_prop_size(_mechtype, 14, 4);
   hoc_register_dparam_semantics(_mechtype, 0, "k_ion");
   hoc_register_dparam_semantics(_mechtype, 1, "k_ion");
@@ -205,7 +218,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 Kd /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kd.mod\n");
+ 	ivoc_help("help ?1 Kd /home/mizzou/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kd.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -467,4 +480,72 @@ _first = 0;
 
 #if defined(__cplusplus)
 } /* extern "C" */
+#endif
+
+#if NMODL_TEXT
+static const char* nmodl_filename = "/home/mizzou/SPWR_BMTK/biophys_components/mechanisms/modfiles/Kd.mod";
+static const char* nmodl_file_text = 
+  ": Based on Kd model of Foust et al. (2011)\n"
+  "\n"
+  "\n"
+  "NEURON	{\n"
+  "	SUFFIX Kd\n"
+  "	USEION k READ ek WRITE ik\n"
+  "	RANGE gbar, g, ik\n"
+  "}\n"
+  "\n"
+  "UNITS	{\n"
+  "	(S) = (siemens)\n"
+  "	(mV) = (millivolt)\n"
+  "	(mA) = (milliamp)\n"
+  "}\n"
+  "\n"
+  "PARAMETER	{\n"
+  "	gbar = 0.00001 (S/cm2)\n"
+  "}\n"
+  "\n"
+  "ASSIGNED	{\n"
+  "	v	(mV)\n"
+  "	ek	(mV)\n"
+  "	ik	(mA/cm2)\n"
+  "	g	(S/cm2)\n"
+  "	celsius (degC)\n"
+  "	mInf\n"
+  "	mTau\n"
+  "	hInf\n"
+  "	hTau\n"
+  "}\n"
+  "\n"
+  "STATE	{\n"
+  "	m\n"
+  "	h\n"
+  "}\n"
+  "\n"
+  "BREAKPOINT	{\n"
+  "	SOLVE states METHOD cnexp\n"
+  "	g = gbar * m * h\n"
+  "	ik = g * (v - ek)\n"
+  "}\n"
+  "\n"
+  "DERIVATIVE states	{\n"
+  "	rates()\n"
+  "	m' = (mInf - m) / mTau\n"
+  "	h' = (hInf - h) / hTau\n"
+  "}\n"
+  "\n"
+  "INITIAL{\n"
+  "	rates()\n"
+  "	m = mInf\n"
+  "	h = hInf\n"
+  "}\n"
+  "\n"
+  "PROCEDURE rates() {\n"
+  "  LOCAL qt\n"
+  "  qt = 2.3^((celsius-23)/10)\n"
+  "	mInf = 1 - 1 / (1 + exp((v - (-43)) / 8))\n"
+  "  mTau = 1\n"
+  "  hInf = 1 / (1 + exp((v - (-67)) / 7.3))\n"
+  "  hTau = 1500\n"
+  "}\n"
+  ;
 #endif

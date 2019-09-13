@@ -16,23 +16,31 @@
     "celsius": 34.0,
     "v_init": -80.0
   },
+  "inputs": {
+    "mthalamus_spikes": {
+      "input_type": "spikes",
+      "module": "sonata",
+      "input_file": "$BASE_DIR/mthalamus_spikes.h5",
+      "node_set": "mthalamus"
+    }
+  },
   "output": {
     "log_file": "log.txt",
     "output_dir": "$OUTPUT_DIR",
     "spikes_file": "spikes.h5"
   },
-  "reports": { 
-    "membrane_report": {
-      "cells": [
-        10, 
-        11
-      ], 
-      "sections": "soma", 
-      "module": "membrane_report", 
-      "variable_name": [
-        "v", 
-        "cai"
-      ]
+  "reports": {
+    "v_report": {
+      "variable_name": "v",
+      "cells": "all",
+      "module": "membrane_report",
+      "sections": "soma"
+    },
+    "cai_report": {
+      "variable_name": "cai",
+      "cells": "all",
+      "module": "membrane_report",
+      "sections": "soma"
     }
   },
   "node_sets_file": "$BASE_DIR/node_sets.json",

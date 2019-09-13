@@ -1,5 +1,5 @@
-node_type_id model_type mem_potential pop_name model_processing morphology model_template dynamics_params
-100 biophysical e PyrA aibs_perisomatic Scnn1a_473845048_m.swc ctdb:Biophys1.hoc 472363762_fit.json
-101 biophysical e PyrC aibs_perisomatic Scnn1a_473845048_m.swc ctdb:Biophys1.hoc 472363762_fit.json
-102 biophysical e Bask aibs_perisomatic Scnn1a_473845048_m.swc ctdb:Biophys1.hoc 472363762_fit.json
-103 biophysical e AAC aibs_perisomatic Scnn1a_473845048_m.swc ctdb:Biophys1.hoc 472363762_fit.json
+node_type_id morphology model_type model_template dynamics_params mem_potential model_processing pop_name
+100 Scnn1a_473845048_m.swc biophysical ctdb:Biophys1.hoc 472363762_fit.json e aibs_perisomatic PyrA
+101 Scnn1a_473845048_m.swc biophysical ctdb:Biophys1.hoc 472363762_fit.json e aibs_perisomatic PyrC
+102 Scnn1a_473845048_m.swc biophysical ctdb:Biophys1.hoc 472363762_fit.json e aibs_perisomatic Bask
+103 Scnn1a_473845048_m.swc biophysical ctdb:Biophys1.hoc 472363762_fit.json e aibs_perisomatic AAC

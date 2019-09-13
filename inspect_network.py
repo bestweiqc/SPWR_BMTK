@@ -7,13 +7,12 @@ from mpl_toolkits.mplot3d import Axes3D
 import h5py
 import networkx as nx
 
-num_PN = 16458
-num_PV = 3908
-num_Chn = 206
-
+num_PN = 164
+num_PV = 37
+num_Chn = 4
 # Load files
 # Node information
-nodes_info = nodes_table(nodes_file='network/SPWR_biophysical_nodes.h5', population='SPWR_biophysical')
+nodes_info = h5py.File('network/SPWR_biophysical_nodes.h5')
 # Connection information
 edges_info = h5py.File('network/SPWR_biophysical_SPWR_biophysical_edges.h5')
 
@@ -25,10 +24,10 @@ tgt_ids = np.array(edges_info['edges']['SPWR_biophysical_to_SPWR_biophysical']['
 conns = np.array([src_ids,tgt_ids]).T
 
 # Get positions
-dset = np.array(nodes_info['positions'].values)
+#dset = np.array(nodes_info['nodes']['SPWR_biophysical']['positions'].values)
 
 # Convert positions to a dataframe
-pos_df = pd.DataFrame(np.array(list(dset))[:,0:3])
+#pos_df = pd.DataFrame(np.array(list(dset))[:,0:3])
 
 # Connectivity histograms
 Pyr2PVconns = conns[(conns[:,0]<num_PN) & (conns[:,1]<num_PN+num_PV) & (conns[:,1]>num_PN),:]

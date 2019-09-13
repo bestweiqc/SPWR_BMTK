@@ -12,27 +12,28 @@ from scipy.signal import welch
 # Load data
 config_file = "simulation_config.json"
 #lfp_file = "./output/ecp.h5"
-mem_pot_file = './output/membrane_report.h5'
+mem_pot_file = './output/v_report.h5'
 raster_file = './output/spikes.h5'
 
 # load 
 f = h5py.File(mem_pot_file,'r')
-
-pdb.set_trace()
-mem_potential = f['v']['data']
+mem_potential = f['report']['SPWR_biophysical']['data']
 
 #f = h5py.File(lfp_file,'r')
 #lfp = list(f['data'])
 #lfp_arr = np.asarray(lfp)
 
 f = h5py.File(raster_file,'r')
-gids = f['spikes']['gids']
-timestamps = f['spikes']['timestamps']
+gids = f['spikes']['SPWR_biophysical']['node_ids']
+timestamps = f['spikes']['SPWR_biophysical']['timestamps']
 
 # Plot data
 
-#plt.figure()
-#plt.plot(mem_potential[:,0])
+plt.figure()
+plt.plot(mem_potential[:,0])
+plt.plot(mem_potential[:,1])
+plt.plot(mem_potential[:,2])
+plt.plot(mem_potential[:,3])
 
 #plt.figure()
 #plt.plot(lfp_arr[:,0])

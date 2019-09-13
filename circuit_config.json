@@ -8,6 +8,7 @@
     "biophysical_neuron_models_dir": "$COMPONENTS_DIR/biophysical_neuron_models",
     "__pycache___dir": "$COMPONENTS_DIR/__pycache__",
     "point_neuron_models_dir": "$COMPONENTS_DIR/point_neuron_models",
+    "templates_dir": "$COMPONENTS_DIR/templates",
     "synaptic_models_dir": "$COMPONENTS_DIR/synaptic_models",
     "morphologies_dir": "$COMPONENTS_DIR/morphologies",
     "mechanisms_dir": "$COMPONENTS_DIR/mechanisms"

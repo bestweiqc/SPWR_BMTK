@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 7.7.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -95,6 +95,15 @@ extern void hoc_register_limits(int, HocParmLimits*);
 extern void hoc_register_units(int, HocParmUnits*);
 extern void nrn_promote(Prop*, int, int);
 extern Memb_func* memb_func;
+ 
+#define NMODL_TEXT 1
+#if NMODL_TEXT
+static const char* nmodl_file_text;
+static const char* nmodl_filename;
+extern void hoc_reg_nmodl_text(int, const char*);
+extern void hoc_reg_nmodl_filename(int, const char*);
+#endif
+
  extern void _nrn_setdata_reg(int, void(*)(Prop*));
  static void _setdata(Prop* _prop) {
  _extcall_prop = _prop;
@@ -152,7 +161,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "7.7.0",
 "Kv2like",
  "gbar_Kv2like",
  0,
@@ -208,6 +217,10 @@ extern void _cvode_abstol( Symbol**, double*, int);
  _mechtype = nrn_get_mechtype(_mechanism[1]);
      _nrn_setdata_reg(_mechtype, _setdata);
      _nrn_thread_reg(_mechtype, 2, _update_ion_pointer);
+ #if NMODL_TEXT
+  hoc_reg_nmodl_text(_mechtype, nmodl_file_text);
+  hoc_reg_nmodl_filename(_mechtype, nmodl_filename);
+#endif
   hoc_register_prop_size(_mechtype, 19, 4);
   hoc_register_dparam_semantics(_mechtype, 0, "k_ion");
   hoc_register_dparam_semantics(_mechtype, 1, "k_ion");
@@ -216,7 +229,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 Kv2like /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kv2like.mod\n");
+ 	ivoc_help("help ?1 Kv2like /home/mizzou/SPWR_BMTK/biophys_components/mechanisms/x86_64/Kv2like.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -509,4 +522,96 @@ _first = 0;
 
 #if defined(__cplusplus)
 } /* extern "C" */
+#endif
+
+#if NMODL_TEXT
+static const char* nmodl_filename = "/home/mizzou/SPWR_BMTK/biophys_components/mechanisms/modfiles/Kv2like.mod";
+static const char* nmodl_file_text = 
+  ": Kv2-like channel\n"
+  ": Adapted from model implemented in Keren et al. 2005\n"
+  ": Adjusted parameters to be similar to guangxitoxin-sensitive current in mouse CA1 pyramids from Liu and Bean 2014\n"
+  "\n"
+  "\n"
+  "NEURON	{\n"
+  "	SUFFIX Kv2like\n"
+  "	USEION k READ ek WRITE ik\n"
+  "	RANGE gbar, g, ik\n"
+  "}\n"
+  "\n"
+  "UNITS	{\n"
+  "	(S) = (siemens)\n"
+  "	(mV) = (millivolt)\n"
+  "	(mA) = (milliamp)\n"
+  "}\n"
+  "\n"
+  "PARAMETER	{\n"
+  "	gbar = 0.00001 (S/cm2)\n"
+  "}\n"
+  "\n"
+  "ASSIGNED	{\n"
+  "	v	(mV)\n"
+  "	ek	(mV)\n"
+  "	ik	(mA/cm2)\n"
+  "	g	(S/cm2)\n"
+  "	celsius (degC)\n"
+  "	mInf\n"
+  "	mAlpha\n"
+  "	mBeta\n"
+  "	mTau\n"
+  "	hInf\n"
+  "	h1Tau\n"
+  "	h2Tau\n"
+  "}\n"
+  "\n"
+  "STATE	{\n"
+  "	m\n"
+  "	h1\n"
+  "	h2\n"
+  "}\n"
+  "\n"
+  "BREAKPOINT	{\n"
+  "	SOLVE states METHOD cnexp\n"
+  "	g = gbar * m * m * (0.5 * h1 + 0.5 * h2)\n"
+  "	ik = g * (v - ek)\n"
+  "}\n"
+  "\n"
+  "DERIVATIVE states	{\n"
+  "	rates()\n"
+  "	m' = (mInf - m) / mTau\n"
+  "	h1' = (hInf - h1) / h1Tau\n"
+  "	h2' = (hInf - h2) / h2Tau\n"
+  "}\n"
+  "\n"
+  "INITIAL{\n"
+  "	rates()\n"
+  "	m = mInf\n"
+  "	h1 = hInf\n"
+  "	h2 = hInf\n"
+  "}\n"
+  "\n"
+  "PROCEDURE rates() {\n"
+  "  LOCAL qt\n"
+  "  qt = 2.3^((celsius-21)/10)\n"
+  "	UNITSOFF\n"
+  "		mAlpha = 0.12 * vtrap( -(v - 43), 11.0)\n"
+  "		mBeta = 0.02 * exp(-(v + 1.27) / 120)\n"
+  "		mInf = mAlpha / (mAlpha + mBeta)\n"
+  "		mTau = 2.5 * (1 / (qt * (mAlpha + mBeta)))\n"
+  "\n"
+  "		hInf =  1/(1 + exp((v + 58) / 11))\n"
+  "		h1Tau = (360 + (1010 + 23.7 * (v + 54)) * exp(-((v + 75) / 48)^2)) / qt\n"
+  "		h2Tau = (2350 + 1380 * exp(-0.011 * v) - 210 * exp(-0.03 * v)) / qt\n"
+  "	UNITSON\n"
+  "}\n"
+  "\n"
+  "FUNCTION vtrap(x, y) { : Traps for 0 in denominator of rate equations\n"
+  "	UNITSOFF\n"
+  "	if (fabs(x / y) < 1e-6) {\n"
+  "		vtrap = y * (1 - x / y / 2)\n"
+  "	} else {\n"
+  "		vtrap = x / (exp(x / y) - 1)\n"
+  "	}\n"
+  "	UNITSON\n"
+  "}\n"
+  ;
 #endif

@@ -130,7 +130,7 @@ def dist_conn_perc(src, trg, prob=0.1, min_dist=0.0, max_dist=300.0, min_syns=1,
     else:
         tmp_nsyn = 0
 
-        return tmp_nsyn
+    return tmp_nsyn
 
 # Create connections between Pyr --> Bask cells
 net.add_edges(source={'pop_name': ['PyrA','PyrC']}, target={'pop_name': 'Bask'},
@@ -176,7 +176,7 @@ def one_to_one(source, target):
 
 thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
                    connection_rule=one_to_one,
-                   syn_weight=9.0e-03,
+                   syn_weight=12.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -185,7 +185,7 @@ thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrA'),
 
 thalamus.add_edges(source=thalamus.nodes(), target=net.nodes(pop_name='PyrC'),
                    connection_rule=one_to_one,
-                   syn_weight=9.0e-03,
+                   syn_weight=12.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -205,12 +205,17 @@ from bmtk.utils.sim_setup import build_env_bionet
 build_env_bionet(base_dir='./',
 		network_dir='./network',
 		tstop=1000.0, dt = 0.1,
+		spikes_inputs=[('mthalamus',   # Name of population which spikes will be generated for
+                                'mthalamus_spikes.h5')],
+		report_vars=['v', 'cai'],     # Record membrane potential and calcium (default soma)
 		components_dir='biophys_components',
 		compile_mechanisms=True)
 
 
-from bmtk.utils.spike_trains import SpikesGenerator
-
-sg = SpikesGenerator(nodes='network/mthalamus_nodes.h5', t_max=60.0)
-sg.set_rate(15.0)
-sg.save_csv('thalamus_spikes.csv', in_ms=True)
+#from bmtk.utils.reports.spike_trains import PoissonSpikeGenerator
+#
+#psg = PoissonSpikeGenerator(population='mthalamus')
+#psg.add(node_ids=range(numPN_A+numPN_C),  # Have nodes to match mthalamus
+#        firing_rate=15.0,    # 15 Hz, we can also pass in a nonhomoegenous function/array
+#        times=(0.0, 3.0))    # Firing starts at 0 s up to 3 s
+#psg.to_sonata('mthalamus_spikes.h5')
