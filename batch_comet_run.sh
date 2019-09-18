@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --partition compute
-#SBATCH --nodes=5
-#SBATCH --ntasks-per-node=20
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
 #SBATCH -A TG-DBS180005
 #SBATCH --job-name=ca1
 #SBATCH --output=ca1%j.out
@@ -11,10 +11,14 @@
 
 rm -rf output
 
-module load cuda
+module load gnu
+module load gnubase
 
 echo "Running model at $(date)"
 
 mpirun nrniv -mpi -quiet -python run_bionet.py simulation_config.json
+
+module unload gnu
+module unload gnubase
 
 echo "Done running model at $(date)"

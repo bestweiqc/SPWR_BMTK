@@ -16,61 +16,47 @@
     "mthalamus_spikes": {
       "input_type": "spikes",
       "module": "sonata",
-      "input_file": "/home/mizzou/SPWR_BMTK/mthalamus_spikes.h5",
+      "input_file": "/home/latimerb/SPWR_BMTK/mthalamus_spikes.h5",
       "node_set": "mthalamus"
     }
   },
   "output": {
     "log_file": "log.txt",
-    "output_dir": "/home/mizzou/SPWR_BMTK/output",
+    "output_dir": "/home/latimerb/SPWR_BMTK/output",
     "spikes_file": "spikes.h5"
   },
-  "reports": {
-    "v_report": {
-      "variable_name": "v",
-      "cells": "all",
-      "module": "membrane_report",
-      "sections": "soma"
-    },
-    "cai_report": {
-      "variable_name": "cai",
-      "cells": "all",
-      "module": "membrane_report",
-      "sections": "soma"
-    }
-  },
-  "node_sets_file": "/home/mizzou/SPWR_BMTK/node_sets.json",
-  "network": "/home/mizzou/SPWR_BMTK/circuit_config.json",
-  "config_path": "/home/mizzou/SPWR_BMTK/simulation_config.json",
-  "config_dir": "/home/mizzou/SPWR_BMTK",
+  "node_sets_file": "/home/latimerb/SPWR_BMTK/node_sets.json",
+  "network": "/home/latimerb/SPWR_BMTK/circuit_config.json",
+  "config_path": "/home/latimerb/SPWR_BMTK/simulation_config.json",
+  "config_dir": "/home/latimerb/SPWR_BMTK",
   "components": {
-    "biophysical_neuron_models_dir": "/home/mizzou/SPWR_BMTK/biophys_components/biophysical_neuron_models",
-    "__pycache___dir": "/home/mizzou/SPWR_BMTK/biophys_components/__pycache__",
-    "point_neuron_models_dir": "/home/mizzou/SPWR_BMTK/biophys_components/point_neuron_models",
-    "templates_dir": "/home/mizzou/SPWR_BMTK/biophys_components/templates",
-    "synaptic_models_dir": "/home/mizzou/SPWR_BMTK/biophys_components/synaptic_models",
-    "morphologies_dir": "/home/mizzou/SPWR_BMTK/biophys_components/morphologies",
-    "mechanisms_dir": "/home/mizzou/SPWR_BMTK/biophys_components/mechanisms"
+    "morphologies_dir": "/home/latimerb/SPWR_BMTK/biophys_components/morphologies",
+    "__pycache___dir": "/home/latimerb/SPWR_BMTK/biophys_components/__pycache__",
+    "point_neuron_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/point_neuron_models",
+    "templates_dir": "/home/latimerb/SPWR_BMTK/biophys_components/templates",
+    "biophysical_neuron_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/biophysical_neuron_models",
+    "mechanisms_dir": "/home/latimerb/SPWR_BMTK/biophys_components/mechanisms",
+    "synaptic_models_dir": "/home/latimerb/SPWR_BMTK/biophys_components/synaptic_models"
   },
   "networks": {
     "nodes": [
       {
-        "nodes_file": "/home/mizzou/SPWR_BMTK/network/SPWR_biophysical_nodes.h5",
-        "node_types_file": "/home/mizzou/SPWR_BMTK/network/SPWR_biophysical_node_types.csv"
+        "nodes_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_nodes.h5",
+        "node_types_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_node_types.csv"
       },
       {
-        "nodes_file": "/home/mizzou/SPWR_BMTK/network/mthalamus_nodes.h5",
-        "node_types_file": "/home/mizzou/SPWR_BMTK/network/mthalamus_node_types.csv"
+        "node_types_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_node_types.csv",
+        "nodes_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_nodes.h5"
       }
     ],
     "edges": [
       {
-        "edge_types_file": "/home/mizzou/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edge_types.csv",
-        "edges_file": "/home/mizzou/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edges.h5"
+        "edge_types_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edge_types.csv",
+        "edges_file": "/home/latimerb/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edges.h5"
       },
       {
-        "edge_types_file": "/home/mizzou/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edge_types.csv",
-        "edges_file": "/home/mizzou/SPWR_BMTK/network/SPWR_biophysical_SPWR_biophysical_edges.h5"
+        "edges_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edges.h5",
+        "edge_types_file": "/home/latimerb/SPWR_BMTK/network/mthalamus_SPWR_biophysical_edge_types.csv"
       }
     ]
   }
