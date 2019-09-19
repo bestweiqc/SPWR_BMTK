@@ -1,4 +1,4 @@
-/* Created by Language version: 7.7.0 */
+/* Created by Language version: 7.5.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -89,15 +89,6 @@ extern void hoc_register_limits(int, HocParmLimits*);
 extern void hoc_register_units(int, HocParmUnits*);
 extern void nrn_promote(Prop*, int, int);
 extern Memb_func* memb_func;
- 
-#define NMODL_TEXT 1
-#if NMODL_TEXT
-static const char* nmodl_file_text;
-static const char* nmodl_filename;
-extern void hoc_reg_nmodl_text(int, const char*);
-extern void hoc_reg_nmodl_filename(int, const char*);
-#endif
-
  extern void _nrn_setdata_reg(int, void(*)(Prop*));
  static void _setdata(Prop* _prop) {
  _extcall_prop = _prop;
@@ -153,7 +144,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.7.0",
+ "7.5.0",
 "Nap",
  "gbar_Nap",
  0,
@@ -207,10 +198,6 @@ extern void _cvode_abstol( Symbol**, double*, int);
  _mechtype = nrn_get_mechtype(_mechanism[1]);
      _nrn_setdata_reg(_mechtype, _setdata);
      _nrn_thread_reg(_mechtype, 2, _update_ion_pointer);
- #if NMODL_TEXT
-  hoc_reg_nmodl_text(_mechtype, nmodl_file_text);
-  hoc_reg_nmodl_filename(_mechtype, nmodl_filename);
-#endif
   hoc_register_prop_size(_mechtype, 13, 4);
   hoc_register_dparam_semantics(_mechtype, 0, "na_ion");
   hoc_register_dparam_semantics(_mechtype, 1, "na_ion");
@@ -219,7 +206,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 Nap /home/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/Nap.mod\n");
+ 	ivoc_help("help ?1 Nap /storage/hpc/data/latimerb/SPWR_BMTK/biophys_components/mechanisms/x86_64/Nap.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -499,87 +486,4 @@ _first = 0;
 
 #if defined(__cplusplus)
 } /* extern "C" */
-#endif
-
-#if NMODL_TEXT
-static const char* nmodl_filename = "/home/latimerb/SPWR_BMTK/biophys_components/mechanisms/modfiles/Nap.mod";
-static const char* nmodl_file_text = 
-  ":Reference : Modeled according to kinetics derived from Magistretti & Alonso 1999\n"
-  ":Comment: corrected rates using q10 = 2.3, target temperature 34, orginal 21\n"
-  "\n"
-  "NEURON	{\n"
-  "	SUFFIX Nap\n"
-  "	USEION na READ ena WRITE ina\n"
-  "	RANGE gbar, g, ina\n"
-  "}\n"
-  "\n"
-  "UNITS	{\n"
-  "	(S) = (siemens)\n"
-  "	(mV) = (millivolt)\n"
-  "	(mA) = (milliamp)\n"
-  "}\n"
-  "\n"
-  "PARAMETER	{\n"
-  "	gbar = 0.00001 (S/cm2)\n"
-  "}\n"
-  "\n"
-  "ASSIGNED	{\n"
-  "	v	(mV)\n"
-  "	ena	(mV)\n"
-  "	ina	(mA/cm2)\n"
-  "	g	(S/cm2)\n"
-  "	celsius (degC)\n"
-  "	mInf\n"
-  "	hInf\n"
-  "	hTau\n"
-  "	hAlpha\n"
-  "	hBeta\n"
-  "}\n"
-  "\n"
-  "STATE	{\n"
-  "	h\n"
-  "}\n"
-  "\n"
-  "BREAKPOINT	{\n"
-  "	SOLVE states METHOD cnexp\n"
-  "	rates()\n"
-  "	g = gbar*mInf*h\n"
-  "	ina = g*(v-ena)\n"
-  "}\n"
-  "\n"
-  "DERIVATIVE states	{\n"
-  "	rates()\n"
-  "	h' = (hInf-h)/hTau\n"
-  "}\n"
-  "\n"
-  "INITIAL{\n"
-  "	rates()\n"
-  "	h = hInf\n"
-  "}\n"
-  "\n"
-  "PROCEDURE rates(){\n"
-  "  LOCAL qt\n"
-  "  qt = 2.3^((celsius-21)/10)\n"
-  "\n"
-  "	UNITSOFF\n"
-  "		mInf = 1.0/(1+exp((v- -52.6)/-4.6)) : assuming instantaneous activation as modeled by Magistretti and Alonso\n"
-  "\n"
-  "		hInf = 1.0/(1+exp((v- -48.8)/10))\n"
-  "		hAlpha = 2.88e-6 * vtrap(v + 17, 4.63)\n"
-  "		hBeta = 6.94e-6 * vtrap(-(v + 64.4), 2.63)\n"
-  "\n"
-  "		hTau = (1/(hAlpha + hBeta))/qt\n"
-  "	UNITSON\n"
-  "}\n"
-  "\n"
-  "FUNCTION vtrap(x, y) { : Traps for 0 in denominator of rate equations\n"
-  "	UNITSOFF\n"
-  "	if (fabs(x / y) < 1e-6) {\n"
-  "		vtrap = y * (1 - x / y / 2)\n"
-  "	} else {\n"
-  "		vtrap = x / (exp(x / y) - 1)\n"
-  "	}\n"
-  "	UNITSON\n"
-  "}\n"
-  ;
 #endif

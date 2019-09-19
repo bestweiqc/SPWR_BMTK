@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --partition Lewis
-#SBATCH -N 5
-#SBATCH -n 100
+#SBATCH -N 1
+#SBATCH -n 4
 #SBATCH --qos=normal
 #SBATCH --job-name=ca1
 #SBATCH --output=ca1%j.out
@@ -10,10 +10,18 @@
 
 rm -rf output
 
-module load cuda
+source activate bmtk_env
+
+module load openmpi/openmpi-2.0.0
+
+module list
 
 echo "Running model at $(date)"
 
-mpirun nrniv -mpi -quiet -python run_bionet.py simulation_config.json
+mpiexec nrniv -mpi -quiet -python run_bionet.py simulation_config.json
 
 echo "Done running model at $(date)"
+
+module unload openmpi/openmpi-2.0.0
+
+source deactivate
